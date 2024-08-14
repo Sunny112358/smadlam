@@ -1,68 +1,889 @@
 <!DOCTYPE html>
-<html>
-<style>
-body, html {
-  height: 100%;
-  margin: 0;
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <title>Scalemaster Adlam India</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif; /* Use the Poppins font */
+            scroll-behavior: smooth; /* Enables smooth scroll */
+            box-sizing: border-box;
+        }
+
+        /* Header Styling */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: white; /* Set header background to white */
+            color: black; /* Set default text color to black */
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow */
+        }
+
+        /* Logo and Text Container */
+        .logo-container {
+            display: flex;
+            align-items: center;
+        }
+
+        /* Logo Image Styling */
+        .logo-container img {
+            height: 50px;
+            margin-right: 15px;
+        }
+
+        /* Company Name and Slogan */
+        .company-name {
+            font-size: 24px;
+            font-weight: bold;
+            line-height: 1.2;
+        }
+
+        .slogan {
+            font-size: 12px;
+            color: #666; /* Slightly lighter color for the slogan */
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            margin-right: 25px; /* Shifts the navigation links 25px to the left */
+        }
+
+        nav ul li {
+            margin-left: 15px;
+        }
+
+        /* Navigation Links Styling */
+        nav ul li a {
+            font-family: 'Poppins', sans-serif; /* Apply Poppins font to navigation links */
+            color: black; /* Set navigation links to black */
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: 150; /* Medium weight for a sleek look */
+            padding: 8px 10px;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #ff6347; /* Highlight color on hover */
+        }
+
+        /* Burger menu icon */
+        .burger {
+            display: none;
+            cursor: pointer;
+            font-size: 24px;
+            color: black; /* Set burger menu color to black */
+        }
+
+        /* Section Styling */
+        section {
+            height: 100vh;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* Home Section with Video */
+        #home {
+            position: relative;
+            background-color: #f4f4f4;
+            overflow: hidden;
+        }
+
+        #home video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+        }
+
+        #how-does-it-work {
+            position: relative;
+            background-color: #f4f4f4;
+            overflow: hidden;
+        }
+
+        /* Video Container */
+        .video-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px; /* Adjust the max-width as needed */
+            margin: 20px auto; /* Center the video container */
+        }
+
+        /* Video Element */
+        #how-it-works-video {
+            width: 100%;
+            height: auto;
+            border-radius: 8px; /* Optional: Adds rounded corners to the video */
+            cursor: pointer;
+        }
+
+        /* Play Button */
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 64px;
+            height: 64px;
+            background: url('play-button.png') no-repeat center center;
+            background-size: cover;
+            cursor: pointer;
+            z-index: 2;
+            transition: opacity 0.3s;
+        }
+
+        /* Hide the play button when the video is playing */
+        #how-it-works-video.playing + .play-button {
+            display: none;
+        }
+
+         /* Features Section */
+        #features {
+            display: flex;
+            flex-direction: column; /* Ensure vertical stacking */
+            align-items: center;
+            text-align: center;
+            padding: 50px 20px;
+            background-color: #f4f4f4; /* Light background for contrast */
+            color: black; /* Set text color to black */
+            z-index: 1; /* Ensure this section is above others */
+            position: relative; /* Position relative to make sure z-index works */
+        }
+
+        .features-content {
+            max-width: 800px;
+            z-index: 2; /* Ensure the content is above other elements */
+            margin-bottom: 40px; /* Add some space between the subtitle and the listing */
+        }
+
+        #features h1 {
+            font-size: 32px;
+            font-weight: 600; /* Bold font for the main title */
+            margin-bottom: 20px;
+            color: #333; /* Darker color for the title */
+        }
+
+        #features p {
+            font-size: 18px;
+            font-weight: 400; /* Regular font weight for the subtitle */
+            color: #666; /* Lighter color for the text */
+            margin-bottom: 10px;
+        }
+
+        /* Features Listing Section */
+        .features-listing {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            z-index: 2; /* Ensure the listing is visible */
+            width: 100%;
+            padding: 0 20px;
+        }
+
+        .feature-item {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .feature-item:hover {
+            transform: translateY(-10px);
+        }
+
+        .feature-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px 8px 0 0;
+            margin-bottom: 20px;
+        }
+
+        .feature-item h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        /* Modern PDF Download Link Button */
+        .pdf-link {
+            display: inline-block;
+            margin-top: 30px;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #ff7e5f, #feb47b); /* Gradient background */
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 500;
+            border-radius: 50px; /* Rounded button */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15); /* Subtle shadow for depth */
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .pdf-link:hover {
+            transform: translateY(-5px); /* Slight lift on hover */
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+        }
+
+                /* Products Section */
+        #products {
+            padding: 50px 20px;
+            background-color: #fff;
+            text-align: center;
+        }
+
+        #products h1 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .carousel-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .carousel-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .carousel-item {
+            min-width: 300px; /* Adjust width as needed */
+            margin: 0 10px;
+            background-color: #f4f4f4;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            position: relative;
+        }
+
+        .carousel-item img {
+            width: 100%;
+            height: 200px; /* Adjust height as needed */
+            object-fit: cover; /* Ensures the image covers the area without distortion */
+            display: block;
+        }
+
+        .carousel-item h2 {
+            font-size: 22px;
+            font-weight: 600;
+            margin: 15px 0 10px;
+            color: #333;
+        }
+
+        .carousel-item p {
+            font-size: 16px;
+            color: #777;
+            margin-bottom: 15px;
+            padding: 0 10px;
+        }
+
+        /* Navigation buttons */
+        .carousel-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 50%;
+            z-index: 2;
+            font-size: 20px;
+        }
+
+        .carousel-button.left {
+            left: 10px;
+        }
+
+        .carousel-button.right {
+            right: 10px;
+        }
+
+            /* Contact Us Section */
+    #contact-us {
+        display: flex;
+        flex-direction: column;
+        padding: 50px 20px;
+        background-color: #f9f9f9;
+        text-align: center;
+    }
+
+    #contact-us h1 {
+        display: block;
+        font-size: 32px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #333;
+    }
+
+    .contact-info {
+        font-size: 16px;
+        color: #555;
+        line-height: 1.6;
+    }
+
+    .contact-info p {
+        margin: 10px 0;
+    }
+
+    .contact-info a {
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .contact-info a:hover {
+        text-decoration: underline;
+    }
+
+        /* Google Maps Embed */
+    .map-container {
+        margin-top: 20px;
+        position: relative;
+        width: 100%;
+        max-width: 800px; /* Adjust as needed */
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+    .map-container iframe {
+        width: 100%;
+        height: 450px;
+        border: 0;
+    }
+
+
+/* About Us Section */
+#about {
+    padding: 50px 20px;
+    background-color: #f9f9f9;
+    text-align: center;
 }
 
-.bgimg {
-  background-image: url('bg_image.jpg');
-  height: 100%;
-  background-position: center;
-  background-size: cover;
-  position: relative;
-  color: white;
-  font-family: Karla;
-  font-size: 25px;
+#about h1 {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
 }
 
-.topleft {
-  position: absolute;
-  top: 0;
-  left: 16px;
+.about-us {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 1000px;
+    margin: 0 auto;
 }
 
-.bottomleft {
-  position: absolute;
-  bottom: 0;
-  left: 16px;
+.photo-container {
+    margin-bottom: 20px;
 }
 
-.middle {
-  font-family: Karla;
-  font-size: 40px;
-  position: absolute;
-  top: 75%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  text-align: center;
+.ceo-photo {
+    width: 200px; /* Adjust size as needed */
+    height: 200px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 2px solid #949597;
 }
 
-hr {
-  margin: auto;
-  width: 40%;
+.description {
+    font-size: 16px;
+    font-style: italic;
+    color: #555;
+    line-height: 1.6;
+    max-width: 800px;
 }
 
-p {
-    font-family: Karla;
-    font-size: large;
+
+/* Clients Section */
+#clients {
+    display: flex;
+    flex-direction: column;
+    padding: 50px 20px;
+    background-color: #fff;
+    text-align: center;
 }
-</style>
+
+#clients h2 {
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.clients-grid {
+    display: block;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.client-item img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+}
+
+/* Further Details Button */
+.further-details {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.further-details:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.further-details:active {
+    background-color: #004494;
+    transform: translateY(0);
+}
+
+/* Testimonials Section */
+#testimonials {
+    display: flex;
+    flex-direction: column;
+    padding: 50px 20px;
+    background-color: #f9f9f9;
+    text-align: center;
+}
+
+#testimonials h2 {
+    display: block;
+    font-size: 32px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #6b6969;
+}
+
+.testimonial-slider {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.testimonial-slide {
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.testimonial-slide p {
+    display: block;
+    font-size: 18px;
+    font-style: italic;
+    color: #555;
+}
+
+.testimonial-slide span {
+    display: block;
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.testimonial-controls {
+    margin-top: 20px;
+}
+
+.testimonial-controls button {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    font-size: 18px;
+    border-radius: 50%;
+    cursor: pointer;
+    margin: 0 10px;
+    transition: background-color 0.3s;
+}
+
+.testimonial-controls button:hover {
+    background-color: #0056b3;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #696666;
+    padding: 20px;
+    text-align: center;
+    border-top: 1px solid #ddd;
+}
+
+footer p {
+    margin: 0;
+    font-size: 14px;
+    color: #f5f3f3;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+
+
+
+
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .burger {
+                display: block; /* Show burger menu on smaller screens */
+                margin-left: 200px; /* Keeps burger menu 200px to the left */
+            }
+
+            nav ul {
+                position: absolute;
+                top: 60px;
+                right: 0;
+                background-color: white; /* Keep the dropdown menu white */
+                flex-direction: column;
+                width: 200px;
+                display: none; /* Hidden by default */
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow to dropdown */
+            }
+
+            nav ul.show {
+                display: flex; /* Show menu when burger is clicked */
+            }
+
+            nav ul li {
+                margin: 10px 0;
+                text-align: right;
+            }
+
+            nav ul li a {
+                padding: 10px 20px;
+                font-size: 18px;
+                width: 100%;
+            }
+
+            header {
+                padding: 15px;
+                justify-content: space-between;
+            }
+        }
+
+    </style>
+</head>
 <body>
 
-<div class="bgimg">
-  <div class="topleft">
-  </div>
-  <div class="middle">
-    <h1>COMING SOON</h1>
-    <hr>
-    <p>For enquiries drop an email to parthashankar.basu@gmail.com or call +91 9885355156</p>
-  </div>
-  <div class="bottomleft">
-  </div>
-</div>
+    <!-- Header with Navigation -->
+    <header>
+        <div class="logo-container">
+            <!-- Insert your logo PNG file here -->
+        <a href="#home">
+            <img src="resources/smadlam_logo.png" alt="Company Logo">
+        </a>
+            <div>
+                <div class="company-name">SCALEMASTER</div>
+                <div class="slogan">SIMPLE, ETHICAL, EFFECTIVE</div>
+            </div>
+        </div>
+        <div class="burger" onclick="toggleMenu()">&#9776;</div>
+        <nav>
+            <ul id="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#how-does-it-work">How does it work?</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#contact-us">Contact us</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#clients">Clients</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+            </ul>
+        </nav>
+    </header>
 
+    <!-- Home Section with Video -->
+    <section id="home">
+        <video src="resources/home section video.mp4" autoplay muted loop></video>
+    </section>
+
+    <section id="how-does-it-work">
+        <div class="video-container">
+            <video id="how-it-works-video" width="100%" height="auto" poster="resources/home-water.jpg" controls>
+                <source src="resources/scalemaster how it works.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+            <div class="play-button" onclick="togglePlay()"></div>
+        </div>
+    </section>
+    
+
+    <section id="features">
+        <div class="features-content">
+            <h1>HYDRODYNAMIC PRINCIPLE TO REMOVE SCALE</h1>
+            <p>Scalemaster units need no chemicals or maintenance.</p>
+            <p>It comes with a 2-year unconditional warranty against manufacturing defects.</p>
+        </div>
+
+
+            <div class="features-listing">
+                <div class="feature-item">
+                    <img src="resources/feature1.jpg" alt="National Standards">
+                    <h2>NATIONAL STANDARDS</h2>
+                    <p>Truly Top-Notch</p>
+                </div>
+                <div class="feature-item">
+                    <img src="resources/feature2.jpg" alt="Industry Award for Service">
+                    <h2>INDUSTRY AWARD FOR SERVICE</h2>
+                    <p>Only the Best</p>
+                </div>
+                <div class="feature-item">
+                    <img src="resources/feature3.jpg" alt="On-Site Customer Service">
+                    <h2>ON-SITE CUSTOMER SERVICE</h2>
+                    <p>Outstanding Quality</p>
+                </div>
+                <div class="feature-item">
+                    <img src="resources/feature4.jpg" alt="On-Site Customer Service">
+                    <h2>ON-SITE CUSTOMER SERVICE</h2>
+                    <p>Outstanding Quality</p>
+                </div>
+        </div>  
+        
+        <!-- PDF Link Button -->
+        <a href="resources/scalemaster brochure.pdf" class="pdf-link" target="_blank">Further Details></a>
+   
+        
+    </section>
+    
+
+    <section id="products">
+        <h1></h1>
+        <div class="carousel-container">
+            <div class="carousel-wrapper">
+                <div class="carousel-item">
+                    <img src="resources/SM DS SS.webp" alt="Product 1">
+                    <h2>DOMESTIC UNIT</h2>
+                    <p>Prevents hard scale formations inside domestic water pipeline.</p>
+                    <p>Does not have recurring maintenance expenses.</p>
+                    <p>Offers relief from the hazards of hard water.</p>
+                    <p>Ensures satisfactory services for many years without chemical pollution.</p>
+                </div>
+                <div class="carousel-item">
+                    <img src="resources/SM IND MODEL_edited.webp" alt="Product 2">
+                    <h2>INDUSTRIAL UNIT</h2>
+                    <p>Mitigate and prevent hard scale formation inside industrial applications and feed-water pipeline.</p>
+                    <p>Does not require recurring maintenance and does not cause chemical pollution.</p>
+                    <p>Offers satisfactory services for many years.</p>
+                    <p>Ensures satisfactory services for many years without chemical pollution.</p>
+                </div>
+                <div class="carousel-item">
+                    <img src="resources/SCALEMASTER AGRO MODEL_edited_edited_edi.webp" alt="Product 3">
+                    <h2>SM AGRO MODEL</h2>
+                    <p>Ensures better water and nutrient absorption by plant roots.</p>
+                    <p>Improves plant health and produce quality.</p>
+                    <p>Offers relief from the hazards of hard water.</p>
+                    <p>Prevents hard scale formation inside the feed water pipe line.</p>
+                </div>
+                <!-- Add more products as needed -->
+            </div>
+            <!-- <button class="carousel-button left" onclick="prevSlide()">❮</button>
+            <button class="carousel-button right" onclick="nextSlide()">❯</button> -->
+        </div>
+    </section>
+
+    <!-- Contact Us Section -->
+    <section id="contact-us">
+        <h1>CONTACT US</h1>
+    <div class="contact-info">
+        <p>Scalemaster Adlam Pvt. Ltd</p>
+        <p>#3, Praga Colony, 75 E, Pet Basheerabad,<br>
+        Medchal Road, Hyderabad - 500 067, Telangana, India</p>
+        <p>Email: <a href="mailto:scalemasteradlam@gmail.com">scalemasteradlam@gmail.com</a></p>
+        <p>Phone: <a href="tel:04040258593">040-40258593</a>, <a href="tel:+91 9885355156">+919885355156</a></p>
+    </div>
+
+    <!-- Google Maps Embed -->
+    <div class="map-container">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10677986.183723124!2d71.05699868332866!3d17.514976163389864!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bcb99cd87dc821b%3A0x12f8fe061c93ba9a!2sScalemaster%20Adlam%20Private%20Limited!5e0!3m2!1sen!2sde!4v1723632443568!5m2!1sen!2sde"
+            width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+    </section>
+
+
+    <!-- About Us Section -->
+    <section id="about">
+        <h1></h1>
+        <div class="about-us">
+            <div class="photo-container">
+                <img src="resources/ceo_photo.webp" alt="P.S. Basu" class="ceo-photo">
+            </div>
+            <div class="description">
+                <p><strong>P.S. Basu, CEO</strong></p>
+                <p>" SCALEMASTER ADLAM PVT LTD. was formed in India in 1987. The technology was brought through a Canadian collaboration. We have been in the manufacturing and marketing of Non-Chemical Scale Control Systems in domestic and international markets since 1987. Our clients include significant members of the Industry.</p>
+                <p>We have Dealer network in different major cities in India and have overseas facility in technology updating aligned with ongoing researches in this field and designing of the units.</p>
+                <p>We are also having affiliations with different Industry Associations. "</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clients Section -->
+    <section id="clients">
+        <h2>Our Clients</h2>
+        <div class="clients-grid">
+            <!-- Placeholder for client photos -->
+            <div class="client-item"><img src="resources/220px-Logo_of_Titan_Company,_May_2018_sv.webp" alt="Client 1"></div>
+            <div class="client-item"><img src="resources/225px-SKF_logo_svg.webp" alt="Client 2"></div>
+            <div class="client-item"><img src="resources/250px-Tata_Steel_Logo_svg.webp" alt="Client 4"></div>
+            <div class="client-item"><img src="resources/blue-star-ltd-logo.webp" alt="Client 5"></div>
+            <div class="client-item"><img src="resources/Indian_Railway-logo-D33F1889EB-seeklogo_.webp" alt="Client 6"></div>
+            <div class="client-item"><img src="resources/vasudha.webp" alt="Client 7"></div>
+            <div class="client-item"><img src="resources/Voltas-Limited-Logo.webp" alt="Client 8"></div>
+        </div>
+        <a href="resources/more companies.pdf" class="pdf-link" target="_blank">More</a>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials">
+        <h2>Testimonials</h2>
+        <div class="testimonial-slider">
+            <div class="testimonial-slide">
+                <p>"This is to certify that scale master unit was installed in Compressor's water cooling line at Bar & Mill a year back. Since, then unit is working satisfactorily. Deposition of scale is also minimum"</p>
+                <span>- Divisional Manager - Bar & Roll Mill, THE TATA IRON & STEEL COMPANY LTD</span>
+            </div>
+            <div class="testimonial-slide">
+                <p>"The unit is working satisfactorily and we have observed that it has been able to reduce the scale formation in our heat exchangers."</p>
+                <span>- M.V Nayak, Manager Operations, ESSEL MINING</span>
+            </div>
+            <div class="testimonial-slide">
+                <p>“We have installed SCALE MASTER scale control system in the Boiler and cooling towers at our Factory. We are pleased to inform you that the system has worked to the best of our satisfaction in preventing scaling in our equipments. Following the installation of the SCALE MASTER, we have stopped using scale preventing chemical, therefore could avoid pollution as well as expenses. We are planning to install more SCALE MASTER scale control system in our Factory.”</p>
+                <span>- Director Technical, VASUDHA PHARMA CHEM LTD</span>
+            </div>
+            <!-- Add more testimonial slides as needed -->
+        </div>
+    </section>
+
+    <!-- Footer Section -->
+    <footer>
+        <p>©2018 Smadlams</p>
+    </footer>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('nav-links');
+            navLinks.classList.toggle('show');
+        }
+
+        function togglePlay() {
+        const video = document.getElementById('how-it-works-video');
+        const playButton = document.querySelector('.play-button');
+
+        if (video.paused) {
+            video.play();
+            video.classList.add('playing');
+        } else {
+            video.pause();
+            video.classList.remove('playing');
+        }
+        }
+
+        let index = 0;
+        const intervalTime = 3000; // Time between slides in milliseconds (3 seconds)
+        const slides = document.querySelector('.carousel-wrapper');
+        const totalSlides = slides.children.length;
+
+        /* function showSlide(i) {
+            if (i >= totalSlides) index = 0;
+            else if (i < 0) index = totalSlides - 1;
+            else index = i;
+            const offset = -index * (slides.children[0].offsetWidth + 20); // Adjust based on item width and margin
+            slides.style.transform = `translateX(${offset}px)`;
+        } */
+
+        /* function nextSlide() {
+            showSlide(index + 1);
+        }
+
+        function prevSlide() {
+            showSlide(index - 1);
+        } */
+
+        // Set up automatic slide transition
+        setInterval(nextSlide, intervalTime);
+
+        // Optional: Add event listeners to navigation buttons
+        document.querySelector('.carousel-button.left').addEventListener('click', prevSlide);
+        document.querySelector('.carousel-button.right').addEventListener('click', nextSlide);
+
+        document.addEventListener('DOMContentLoaded', () => {
+    const slides = document.querySelectorAll('.testimonial-slide');
+    const prevButton = document.querySelector('.prev-slide');
+    const nextButton = document.querySelector('.next-slide');
+    let currentSlide = 0;
+
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.style.display = i === index ? 'block' : 'none';
+        });
+    }
+
+    function nextSlide() {
+        currentSlide = (currentSlide + 1) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    function prevSlide() {
+        currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+        showSlide(currentSlide);
+    }
+
+    nextButton.addEventListener('click', nextSlide);
+    prevButton.addEventListener('click', prevSlide);
+
+    showSlide(currentSlide);
+    setInterval(nextSlide, 5000); // Change slide every 5 seconds
+});
+    </script>
 </body>
 </html>
-
